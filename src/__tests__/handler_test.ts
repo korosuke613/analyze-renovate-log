@@ -3,7 +3,7 @@ import { handleDependencyExtraction } from "../handler.ts";
 import {
   dependencyExtractionComplete,
   packageFilesWithUpdates,
-} from "./data/logJson.js";
+} from "./testdata/logJson.js";
 
 Deno.test("positive: handleDependencyExtraction()", () => {
   const actual = handleDependencyExtraction(dependencyExtractionComplete, {
