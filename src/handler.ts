@@ -15,10 +15,10 @@ const isDependencyExtraction = (
 };
 
 export const handleDependencyExtraction = (
-  parsed: Renovate.JsonLog,
+  jsonLog: Renovate.JsonLog,
   config = defaultHandlerConfig,
 ) => {
-  if (!isDependencyExtraction(parsed)) {
+  if (!isDependencyExtraction(jsonLog)) {
     return undefined;
   }
 
@@ -28,9 +28,17 @@ export const handleDependencyExtraction = (
     );
   }
 
-  const { baseBranch, stats } = parsed;
+  const { baseBranch, stats } = jsonLog;
   return {
     baseBranch,
     stats,
   };
+};
+
+export const handlers: {
+  [key: string]: (
+    jsonLog: Renovate.JsonLog,
+  ) => undefined | Record<string, unknown>;
+} = {
+  [Renovate.DEPENDENCY_EXTRACTION_COMPLETE]: handleDependencyExtraction,
 };

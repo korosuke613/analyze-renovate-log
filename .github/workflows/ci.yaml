@@ -3,11 +3,12 @@ name: CI
 on: 
   push:
 
+env:
+  DENO_DIR: my_cache_directory
+
 jobs:
   deno-lint:
     runs-on: ubuntu-latest
-    env:
-      DENO_DIR: my_cache_directory
     steps:
       - uses: actions/checkout@v3
 
@@ -15,7 +16,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.DENO_DIR }}
-          key: ${{ hashFiles('deno.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-
 
       - uses: denoland/setup-deno@v1.1.1
         with:
@@ -39,8 +42,6 @@ jobs:
 
   deno-test:
     runs-on: ubuntu-latest
-    env:
-      DENO_DIR: my_cache_directory
     steps:
       - uses: actions/checkout@v3
 
@@ -48,7 +49,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.DENO_DIR }}
-          key: ${{ hashFiles('deno.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-
 
       - uses: denoland/setup-deno@v1.1.1
         with:
@@ -60,7 +63,7 @@ jobs:
 
       - name: Run tests
         run: |
-          deno test --coverage=cov_profile > test_results.txt
+          deno task test:coverage > test_results.txt
 
       - name: Generate coverage file
         run: |
