@@ -10,5 +10,9 @@
       "include": ["src/"],
       "exclude": ["src/__tests__/testdata/"]
     }
+  },
+  "tasks": {
+    "build-npm": "deno run -A ./build-npm.ts",
+    "start": "deno run --allow-read ./mod.ts"
   }
 }
