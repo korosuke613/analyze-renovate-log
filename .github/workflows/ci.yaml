@@ -1,0 +1,82 @@
+name: CI
+
+on: 
+  push:
+
+jobs:
+  deno-lint:
+    runs-on: ubuntu-latest
+    env:
+      DENO_DIR: my_cache_directory
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Deno dependencies 
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ hashFiles('deno.lock') }}
+
+      - uses: denoland/setup-deno@v1.1.1
+        with:
+          deno-version: v1.x
+
+      - name: Cache dependencies
+        run: |
+          deno cache --lock deno.lock dev_deps.ts deps.ts
+
+      - name: Run fmt
+        run: |
+          deno fmt --check
+
+      - name: Run lint
+        run: |
+          deno lint
+
+      - name: Check mod.ts
+        run: |
+          deno check mod.ts
+
+  deno-test:
+    runs-on: ubuntu-latest
+    env:
+      DENO_DIR: my_cache_directory
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Deno dependencies 
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ hashFiles('deno.lock') }}
+
+      - uses: denoland/setup-deno@v1.1.1
+        with:
+          deno-version: v1.x
+
+      - name: Cache dependencies
+        run: |
+          deno cache --lock deno.lock dev_deps.ts deps.ts
+
+      - name: Run tests
+        run: |
+          deno test --coverage=cov_profile > test_results.txt
+
+      - name: Generate coverage file
+        run: |
+          deno coverage cov_profile --lcov --output=cov_profile.lcov
+
+      - name: Display test results
+        if: always()
+        run: |
+          cat test_results.txt
+          echo "## Test result" >> $GITHUB_STEP_SUMMARY
+          deno run --allow-read npm:ansi-to-html test_results.txt >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          files: ./cov_profile.lcov
+          flags: unittests 
+

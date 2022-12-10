@@ -1,1 +1,14 @@
-{}
+{
+  "lint": {
+    "files": {
+      "include": ["src/"],
+      "exclude": ["src/__tests__/testdata/"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "include": ["src/"],
+      "exclude": ["src/__tests__/testdata/"]
+    }
+  }
+}
