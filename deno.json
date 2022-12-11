@@ -10,5 +10,9 @@
       "include": ["src/"],
       "exclude": ["src/__tests__/testdata/"]
     }
+  },
+  "tasks": {
+    "test": "deno test --allow-read --allow-write",
+    "test:coverage": "deno task test --coverage=cov_profile"
   }
 }

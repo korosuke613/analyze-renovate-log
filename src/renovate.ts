@@ -15,6 +15,10 @@ export const LogLevelMap: Record<number, LogLevel> = {
   60: "FATAL",
 } as const;
 
+export const getReadableLogLevel = (level: number): LogLevel => {
+  return LogLevelMap[level];
+};
+
 export const DEPENDENCY_EXTRACTION_COMPLETE = "Dependency extraction complete";
 
 export const JsonLogMap: Record<string, string> = {
