@@ -12,6 +12,8 @@
     }
   },
   "tasks": {
+    "cli": "deno run --allow-read --allow-write ./src/cli.ts",
+    "binaly": "deno compile --allow-read --output './analyze-renovate-log' ./src/cli.ts",
     "test": "deno test --allow-read --allow-write",
     "test:coverage": "deno task test --coverage=cov_profile"
   }

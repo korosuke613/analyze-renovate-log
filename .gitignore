@@ -6,3 +6,4 @@ lcov/
 cov_profile/
 cov_profile.lcov
 dist/
+analyze-renovate-log

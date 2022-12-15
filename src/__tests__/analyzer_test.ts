@@ -30,7 +30,12 @@ Deno.test("positive: Analyzer.analyze() from string", async () => {
 
 Deno.test("Analyzer.analyze() by file io", async (t) => {
   const analyzer = new Analyzer(
-    { fileName: path.join(__dirname, "testdata/renovate-json.log") },
+    {
+      fileName: path.join(
+        __dirname,
+        "testdata/renovate-json-default-branch.log",
+      ),
+    },
   );
   await t.step("positive: analyze() from file", async () => {
     await analyzer.analyze();

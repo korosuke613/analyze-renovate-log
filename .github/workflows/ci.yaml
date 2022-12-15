@@ -40,7 +40,7 @@ jobs:
         run: |
           deno check mod.ts
 
-  deno-test:
+  deno-unit-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -83,3 +83,43 @@ jobs:
           files: ./cov_profile.lcov
           flags: unittests 
 
+  deno-e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Deno dependencies 
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ runner.os }}-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - uses: denoland/setup-deno@v1.1.1
+        with:
+          deno-version: v1.x
+
+      - name: Cache dependencies
+        run: |
+          deno cache --lock deno.lock dev_deps.ts deps.ts
+
+      - name: Run output file for default branch log
+        run: |
+          deno task cli --output-file --file ./src/__tests__/testdata/renovate-json-default-branch.log
+          deno task cli --output-file --file ./src/__tests__/testdata/renovate-json-topic-branch.log
+
+      - name: Check exists output file
+        run: |
+          ls ./dist/renovate-json-default-branch.json
+          ls ./dist/renovate-json-topic-branch.json
+
+      - name: Compare output files
+        run: |
+          diff -u ./dist/renovate-json-default-branch.json ./dist/renovate-json-topic-branch.json || true
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist-logs
+          path: |
+            dist/renovate-json-*.json
