@@ -25,7 +25,10 @@ export const JsonLogMap: Record<string, string> = {
   DEPENDENCY_EXTRACTION_COMPLETE,
 } as const;
 
-export type JsonLog = JsonLogBase | DependencyExtraction;
+export type JsonLog =
+  | JsonLogBase
+  | DependencyExtraction
+  | PackageFilesWithUpdates;
 
 type JsonLogBase = {
   [key: string]: unknown;
@@ -35,8 +38,38 @@ type JsonLogBase = {
   level: number;
 };
 
+/*
+ *  Dependency Extraction
+ */
+
 export type DependencyExtraction = JsonLogBase & {
   baseBranch: string;
   stats: Record<string, unknown>;
   msg: `${string}${typeof DEPENDENCY_EXTRACTION_COMPLETE}${string}`;
+};
+
+/*
+ *  PackageFiles With Updates
+ */
+
+export const PACKAGE_FILES_WITH_UPDATES = "packageFiles with updates";
+
+export type Dep = {
+  [key: string]: unknown;
+  depName: string;
+};
+
+export type PackageUpdate = {
+  packageFile: string;
+  deps: Array<Dep>;
+};
+
+export type ManagerName = string;
+
+export type PackageUpdateConfig = Record<ManagerName, Array<PackageUpdate>>;
+
+export type PackageFilesWithUpdates = JsonLogBase & {
+  baseBranch: string;
+  config: PackageUpdateConfig;
+  msg: `${string}${typeof PACKAGE_FILES_WITH_UPDATES}${string}`;
 };

@@ -1,44 +1,70 @@
 import { assertEquals } from "../../dev_deps.ts";
-import { handleDependencyExtraction } from "../handler.ts";
+import {
+  handleDependencyExtraction,
+  handlePackageFilesWithUpdates,
+} from "../handler.ts";
 import {
   dependencyExtractionComplete,
+  emptyRenovateLog,
   packageFilesWithUpdates,
-} from "./testdata/logJson.js";
+  prettyPackageFilesWithUpdates,
+} from "./testdata/logJson.ts";
 
-Deno.test("positive: handleDependencyExtraction()", () => {
-  const actual = handleDependencyExtraction(dependencyExtractionComplete, {
-    debugLog: false,
+Deno.test("handleDependencyExtraction()", async (t) => {
+  await t.step("positive", () => {
+    const actual = handleDependencyExtraction(dependencyExtractionComplete, {
+      debugLog: false,
+    });
+    const expected = {
+      baseBranch: "main",
+      stats: {
+        managers: {
+          asdf: {
+            depCount: 3,
+            fileCount: 1,
+          },
+          gomod: {
+            depCount: 2,
+            fileCount: 1,
+          },
+          regex: {
+            depCount: 1,
+            fileCount: 1,
+          },
+        },
+        total: {
+          depCount: 6,
+          fileCount: 3,
+        },
+      },
+    };
+    assertEquals(actual, expected);
   });
-  const expected = {
-    baseBranch: "main",
-    stats: {
-      managers: {
-        asdf: {
-          depCount: 3,
-          fileCount: 1,
-        },
-        gomod: {
-          depCount: 2,
-          fileCount: 1,
-        },
-        regex: {
-          depCount: 1,
-          fileCount: 1,
-        },
-      },
-      total: {
-        depCount: 6,
-        fileCount: 3,
-      },
-    },
-  };
-  assertEquals(actual, expected);
+
+  await t.step("negative", () => {
+    const actual = handleDependencyExtraction(emptyRenovateLog, {
+      debugLog: false,
+    });
+    const expected = undefined;
+    assertEquals(actual, expected);
+  });
 });
 
-Deno.test("negative: handleDependencyExtraction()", () => {
-  const actual = handleDependencyExtraction(packageFilesWithUpdates, {
-    debugLog: false,
+Deno.test("handlePackageFilesWithUpdates()", async (t) => {
+  await t.step("positive", () => {
+    const actual = handlePackageFilesWithUpdates(packageFilesWithUpdates, {
+      debugLog: false,
+    });
+    const expected: ReturnType<typeof handlePackageFilesWithUpdates> =
+      prettyPackageFilesWithUpdates;
+    assertEquals(actual, expected);
   });
-  const expected = undefined;
-  assertEquals(actual, expected);
+
+  await t.step("negative", () => {
+    const actual = handlePackageFilesWithUpdates(emptyRenovateLog, {
+      debugLog: false,
+    });
+    const expected = undefined;
+    assertEquals(actual, expected);
+  });
 });
