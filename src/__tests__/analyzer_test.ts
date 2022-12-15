@@ -6,7 +6,7 @@ import * as Renovate from "../renovate.ts";
 import {
   dependencyExtractionComplete,
   packageFilesWithUpdates,
-} from "./testdata/logJson.js";
+} from "./testdata/logJson.ts";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 
@@ -40,6 +40,13 @@ Deno.test("Analyzer.analyze() by file io", async (t) => {
         Renovate.DEPENDENCY_EXTRACTION_COMPLETE,
       ),
       `analyze result does not have '${Renovate.DEPENDENCY_EXTRACTION_COMPLETE}'`,
+    );
+    assert(
+      Object.hasOwn(
+        analyzer.analyzeResult,
+        Renovate.PACKAGE_FILES_WITH_UPDATES,
+      ),
+      `analyze result does not have '${Renovate.PACKAGE_FILES_WITH_UPDATES}'`,
     );
   });
 

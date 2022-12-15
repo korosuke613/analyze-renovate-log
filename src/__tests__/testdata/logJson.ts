@@ -1,3 +1,12 @@
+import * as Renovate from "../../renovate.ts";
+
+export const emptyRenovateLog: Renovate.JsonLog = {
+  msg: "empty",
+  time: "2022-12-12T13:41:43.397Z",
+  v: 0,
+  level: 20
+};
+
 export const dependencyExtractionComplete = {
   name: "renovate",
   hostname: "hoge",
@@ -175,4 +184,144 @@ export const packageFilesWithUpdates = {
   msg: "packageFiles with updates",
   time: "2022-12-10T13:41:46.615Z",
   v: 0,
+};
+
+export const prettyPackageFilesWithUpdates = {
+  baseBranch: "main",
+  updates: {
+    asdf: {
+      ".tool-versions": {
+        golang: {
+          currentValue: "1.18.1",
+          currentVersion: "1.18.1",
+          datasource: "github-tags",
+          depIndex: 1,
+          depName: "golang",
+          extractVersion: "^go(?<version>\\S+)",
+          fixedVersion: "1.18.1",
+          isSingleVersion: true,
+          packageName: "golang/go",
+          sourceUrl: "https://github.com/golang/go",
+          updates: [
+            {
+              branchName: "renovate/golang-version",
+              bucket: "non-major",
+              newMajor: 1,
+              newMinor: 19,
+              newValue: "1.19.4",
+              newVersion: "1.19.4",
+              releaseTimestamp: "2022-12-06T19:30:53.000Z",
+              updateType: "minor",
+            },
+          ],
+          versioning: "semver",
+          warnings: [],
+        },
+        "golangci-lint": {
+          depIndex: 2,
+          depName: "golangci-lint",
+          skipReason: "unsupported-datasource",
+          updates: [],
+        },
+        goreleaser: {
+          depIndex: 0,
+          depName: "goreleaser",
+          skipReason: "unsupported-datasource",
+          updates: [],
+        },
+      },
+    },
+    gomod: {
+      "go.mod": {
+        go: {
+          currentValue: "1.18",
+          currentVersion: "1.18.9",
+          datasource: "golang-version",
+          depIndex: 0,
+          depName: "go",
+          depType: "golang",
+          homepage: "https://go.dev/",
+          isSingleVersion: false,
+          managerData: {
+            lineNumber: 2,
+          },
+          rangeStrategy: "replace",
+          sourceUrl: "https://github.com/golang/go",
+          updates: [
+            {
+              branchName: "renovate/golang-version",
+              bucket: "non-major",
+              isRange: true,
+              newMajor: 1,
+              newMinor: 19,
+              newValue: "1.19",
+              newVersion: "1.19.4",
+              releaseTimestamp: "2022-12-06T00:00:00.000Z",
+              updateType: "minor",
+            },
+          ],
+          versioning: "npm",
+          warnings: [],
+        },
+        "go.uber.org/zap": {
+          currentValue: "v1.20.0",
+          currentVersion: "v1.20.0",
+          datasource: "go",
+          depIndex: 1,
+          depName: "go.uber.org/zap",
+          depType: "require",
+          fixedVersion: "v1.20.0",
+          isSingleVersion: true,
+          managerData: {
+            lineNumber: 4,
+          },
+          sourceUrl: "https://github.com/uber-go/zap",
+          updates: [
+            {
+              branchName: "renovate/gomod",
+              bucket: "non-major",
+              newMajor: 1,
+              newMinor: 24,
+              newValue: "v1.24.0",
+              newVersion: "v1.24.0",
+              releaseTimestamp: "2022-11-30T18:30:33.000Z",
+              updateType: "minor",
+            },
+          ],
+          versioning: "semver",
+          warnings: [],
+        },
+      },
+    },
+    regex: {
+      ".tool-versions": {
+        "golangci/golangci-lint": {
+          currentValue: "1.49.0",
+          currentVersion: "1.49.0",
+          datasource: "github-releases",
+          depIndex: 0,
+          depName: "golangci/golangci-lint",
+          extractVersion: "^v(?<version>.*)$",
+          fixedVersion: "1.49.0",
+          isSingleVersion: true,
+          replaceString: "golangci-lint 1.49.0",
+          sourceUrl: "https://github.com/golangci/golangci-lint",
+          updates: [
+            {
+              branchName: "renovate/golangci-lint",
+              bucket: "non-major",
+              newMajor: 1,
+              newMinor: 50,
+              newValue: "1.50.1",
+              newVersion: "1.50.1",
+              releaseTimestamp: "2022-10-22T11:11:45.000Z",
+              updateType: "minor",
+            },
+          ],
+          versioning: "semver",
+          warnings: [],
+        },
+      },
+    },
+  },
 };
