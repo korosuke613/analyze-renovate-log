@@ -41,8 +41,8 @@ export class Analyzer {
     return await Deno.open(fileName);
   }
 
-  public async write(fileName = this.config.fileName) {
-    if (fileName === undefined) {
+  public async write(filePath = this.config.fileName) {
+    if (filePath === undefined) {
       throw new Error("file name is undefined.");
     }
 
@@ -52,12 +52,10 @@ export class Analyzer {
       await Deno.mkdir(this.config.analyzeResultDirPath, { recursive: true });
     }
 
-    const realAnalyzeResultDirPath = await Deno.realPath(
-      this.config.analyzeResultDirPath,
-    );
+    const fileName = path.parse(filePath).name;
 
     await Deno.writeTextFile(
-      path.join(realAnalyzeResultDirPath, `${fileName}.json`),
+      path.join(this.config.analyzeResultDirPath, `${fileName}.json`),
       JSON.stringify(this.analyzeResult, null, 2),
     );
   }
