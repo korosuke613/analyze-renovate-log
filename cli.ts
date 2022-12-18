@@ -1,5 +1,5 @@
-import { Command } from "../deps.ts";
-import { Analyzer } from "./analyzer.ts";
+import { Command } from "./deps.ts";
+import { Analyzer } from "./src/analyzer.ts";
 
 const command = await new Command()
   .name("analyze-renovate-log")
