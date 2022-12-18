@@ -3,6 +3,9 @@ name: CI
 on: 
   push:
 
+permissions:
+  contents: read
+
 env:
   DENO_DIR: my_cache_directory
 
