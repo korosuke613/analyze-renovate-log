@@ -287,3 +287,9 @@ Renovate Message: [INFO] Repository finished
   ]
 }
 ```
+
+## Release
+1. Open [Tagging and Release action page](https://github.com/korosuke613/analyze-renovate-log/actions/workflows/release.yaml).
+2. Click `Run workflow`.
+3. Input version.
+4. Click `Run workflow`.
