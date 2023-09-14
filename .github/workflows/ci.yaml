@@ -80,7 +80,7 @@ jobs:
           deno run --allow-read npm:ansi-to-html test_results.txt >> $GITHUB_STEP_SUMMARY
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         if: always()
         with:
           files: ./cov_profile.lcov
