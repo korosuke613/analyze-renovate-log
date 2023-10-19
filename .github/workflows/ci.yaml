@@ -13,7 +13,7 @@ jobs:
   deno-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache Deno dependencies 
         uses: actions/cache@v3
@@ -46,7 +46,7 @@ jobs:
   deno-unit-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache Deno dependencies 
         uses: actions/cache@v3
@@ -89,7 +89,7 @@ jobs:
   deno-e2e-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache Deno dependencies 
         uses: actions/cache@v3
