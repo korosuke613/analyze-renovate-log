@@ -121,7 +121,7 @@ jobs:
         run: |
           diff -u ./dist/renovate-json-default-branch.json ./dist/renovate-json-topic-branch.json || true
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: dist-logs
           path: |
